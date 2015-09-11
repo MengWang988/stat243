@@ -5,26 +5,21 @@
 \geometry{tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
 
 
-%% begin.rcode include, include=FALSE
+%% begin.rcode r-start, include=FALSE
 % lowHi <- c(which.min(LakeHuron), which.max(LakeHuron))
 % yearExtrema <- attributes(LakeHuron)$tsp[1]-1 + lowHi
 %% end.rcode
 
 \begin{document}
 
-
-The height of the water level in Lake Huron fluctuates over time. Here I \’ analyze\’ the variation using R. I
+\noindent The height of the water level in Lake Huron fluctuates over time. Here I \rq analyze\rq the variation using R. I
 show a histogram of the lake levels for the period \rinline{yearExtrema[1]} to \rinline{yearExtrema[2]}.
 
-%% begin.rcode, eval, eval=FALSE
+%% begin.rcode the_plot, fig.height = 4, fig.width = 3
 % hist(LakeHuron)
 %% end.rcode
 
-%% begin.rcode r-plot, fig.height = 3
-% hist(LakeHuron)
-%% end.rcod
-
-%% begin.rcode, eval, eval=FALSE
+%% begin.rcode chunk2, eval=FALSE
 % lowHi <- c(which.min(LakeHuron), which.max(LakeHuron))
 % yearExtrema <- attributes(LakeHuron)$tsp[1]-1 + lowHi
 %% end.rcode
