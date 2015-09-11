@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{natbib}
+\usepackage[unicode=true]{hyperref}
+\usepackage{geometry}
+\geometry{tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+
+
+%% begin.rcode include, include=FALSE
+% lowHi <- c(which.min(LakeHuron), which.max(LakeHuron))
+% yearExtrema <- attributes(LakeHuron)$tsp[1]-1 + lowHi
+%% end.rcode
+
+\begin{document}
+
+
+The height of the water level in Lake Huron fluctuates over time. Here I \’ analyze\’ the variation using R. I
+show a histogram of the lake levels for the period \rinline{yearExtrema[1]} to \rinline{yearExtrema[2]}.
+
+%% begin.rcode, eval, eval=FALSE
+% hist(LakeHuron)
+%% end.rcode
+
+%% begin.rcode r-plot, fig.height = 3
+% hist(LakeHuron)
+%% end.rcod
+
+%% begin.rcode, eval, eval=FALSE
+% lowHi <- c(which.min(LakeHuron), which.max(LakeHuron))
+% yearExtrema <- attributes(LakeHuron)$tsp[1]-1 + lowHi
+%% end.rcode
+
+\end{document}

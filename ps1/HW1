@@ -1,0 +1,67 @@
+#! /bin/bash
+# STAT 243, PS1
+# Author: Meng Wang
+# SID: 21706745 
+
+################ Problem 1 (a) #################################
+# download the data online and save it to a file
+wget -O data_download "http://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=itemCode:526&DataMartId=FAO&Format=csv&c=2,3,4,5,6,7&s=countryName:asc,elementCode:asc,year:desc"
+
+# unzip and rename to data
+unzip -p data_download > data 
+
+# extract the lines of the regions (contains '+')
+grep "["\+"]" data > data_region
+
+# extract the lines of the countries (without '+')
+grep -v "["\+"]" data > data_country
+
+# find the top five countries with the biggest harvest area in 2005
+grep "Area Harvested.*2005.*Ha" data_country | sort --field-separator=',' -k6,6 -r | cut -d',' -f1 | head -5 > top_five_country_harvest_area_2005 ##### <------------------ answer saved in this file
+
+# write a for loop to find out the top five countries 
+for ((yr=1965;yr<=2005;yr=yr+10))
+do
+  grep "Area Harvested.*"$yr".*Ha" data_country | sort --field-separator=',' -k6,6 -r | cut -d',' -f1 | head -5 > top_five_country_harvest_area_$yr
+done
+#### the top five countries changed ######
+
+############## Problem 1 (b) #################################
+function printOutItem(){
+# get the url
+  url=http://data.un.org/Handlers/DownloadHandler.ashx?DataFilter=itemCode:$#&DataMartId=FAO&Format=csv&c=2,3,4,5,6,7&s=countryName:asc,elementCode:asc,year:desc
+# download the data
+wget -O data_download_item_$# "url"
+# unzip the data
+unzip -p data_download_item_$# > data_item_$#
+# print out the data
+cat data_item_$#
+}
+
+
+############# Problem 2 ######################################
+## It seems that there is a folder "http://www1.ncdc.noaa.gov/pub/data/ghcn/daily/all/"
+## takes forever to download. Instead I will download all the files in that folder first
+## and then remove the files which are not .txt files and print out the name of the .txt 
+
+# download the whole website
+wget -v -r --no-parent http://www1.ncdc.noaa.gov/pub/data/ghcn/daily/
+
+cd ../www1.ncdc.noaa.gov/pub/data/ghcn/daily/
+
+# remove all the files except .txt
+rm !(*.txt) 
+
+# print them out
+echo "================ Files Downloaded ====================="
+ls
+echo "======================================================="
+
+
+
+
+
+
+
+
+
