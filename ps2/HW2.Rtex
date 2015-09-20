@@ -23,7 +23,7 @@ The data can be downloaded with \lq wget\rq
 % wget ${url}
 %% end.rcode
 
-Since the file is too big to unzip and read into R. We shall first have a look at the file with some bash command.bzip2 provides a command \lq bzcat\rq, which allows us access to the file and we could use this command and pipe the file to some other bash commands without actually exacting the file. For example, we could have a look at the fields of the .csv file by the following code
+Since the file is too big to unzip and read into R. We shall first have a look at the file with some bash command. bzip2 provides a command \lq bzcat\rq, which allows us access to the file and we could use this command and pipe the file to some other bash commands without actually exacting the file. For example, we could have a look at the fields of the .csv file by the following code
 %% begin.rcode look, eval=FALSE
 % bzcat ss13hus.csv.bz2 | head -n 1
 %% end.rcode
@@ -78,7 +78,7 @@ Use \lq system.time()\rq to get the time consumed by the command
 It turns out that \lq read.csv\rq  is much slower than \lq readLines\rq .
 
 \section{Part(c)}
-I have used the bash command to explicitly exact the data we are interested in and saved the interested data as \lq sample.csv\rq . This should speed up the flow process than using R function to exact the columns. Actually the whole process can be done with bash except the random sample generating part. With the idea that we want to use as little as R code in mind, we could use R to generate the random line number from 0 to the number of rows in the data file. The number of rows in the data can be easily find out by 
+I have used the bash command to explicitly exact the data we are interested in and saved the interested data as \lq sample\_ R.csv\rq . This should speed up the flow process than using R function to exact the columns. Actually the whole process can be done with bash except the random sample generating part. With the idea that we want to use as little as R code in mind, we could use R to generate the random line number from 0 to the number of rows in the data file. The number of rows in the data can be easily found out by 
 %% begin.rcode line_number, eval=FALSE
 %   bzcat ss13hus.csv.bz2 | wc -l
 %% end.rcode
@@ -89,6 +89,7 @@ The result is 7219001. Then we use R to generate 1000 random integers from 1 - 7
 % # generate 1000 random number as line numbers to extract the data
 % randnum <- as.data.frame(sample(1:7219000, 1000));
 % write.csv(randnum, file="randnum"); 
+%% end.rcode
 
 Exact the second column which contains the random line numbers and put the random line numbers into file \lq randLine\rq
 
@@ -97,7 +98,7 @@ Exact the second column which contains the random line numbers and put the rando
 % tail -n +2 randnum | cut -d',' -f2 > randLine
 %% end.rcode
 
-Then use a for loop to read the random line number from file \lq randLine\rq and exact that line from \lq selected_data.csv \rq
+Then use a for loop to read the random line number from file \lq randLine\rq and exact that line from \lq selected\_ data.csv\rq
 
 %% begin.rcode exact, eval=FALSE
 % # read the line number in randLine and exact the data
@@ -110,7 +111,7 @@ Then use a for loop to read the random line number from file \lq randLine\rq and
 By using bash, we could do the same thing with R. The result is saved in file \lq sample\_ bash.csv\rq . 
 
 \section{Part(d)}
-Check the file \lq sample\_ R.csv\rq with \lq xtab\rq  and see whether there are any interesting associations. We can check the relationship between tenure of the house \lq TEN\rq  and number of vehicles\lq  VEH\rq.
+Check the file \lq sample\_ R.csv\rq with \lq xtab\rq  and see whether there are any interesting associations. We can check the relationship between tenure of the house \lq TEN\rq  and number of vehicles\lq  VEH\rq .
 
 %% begin.rcode table1
 % xtabs(~ TEN + VEH, data=sample);
