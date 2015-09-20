@@ -1,0 +1,125 @@
+\documentclass{article}
+\usepackage{natbib}
+\usepackage[unicode=true]{hyperref}
+\usepackage{geometry}
+\geometry{tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\setlength\parindent{0pt}
+	
+\begin{document} 
+\title{Stat243 PS2}
+\author{Meng Wang, SID: 21706745}
+\date{Septembre 19, 2015}
+
+\maketitle
+
+
+\begin{document}
+\section{Part(a)}
+
+The data can be downloaded with \lq wget\rq
+
+%% begin.rcode download, eval=FALSE
+% url="http://www.stat.berkeley.edu/share/paciorek/ss13hus.csv.bz2"
+% wget ${url}
+%% end.rcode
+
+Since the file is too big to unzip and read into R. We shall first have a look at the file with some bash command.bzip2 provides a command \lq bzcat\rq, which allows us access to the file and we could use this command and pipe the file to some other bash commands without actually exacting the file. For example, we could have a look at the fields of the .csv file by the following code
+%% begin.rcode look, eval=FALSE
+% bzcat ss13hus.csv.bz2 | head -n 1
+%% end.rcode
+
+This provides us the fields contained in this file. We could also count how many fields there are in the file by changing the delimiter \lq ,\rq to \lq \textbackslash n\rq and count the number of lines with command \lq wc\rq
+%% begin.rcode count, eval=FALSE
+% bzcat ss13hus.csv.bz2 | head -n 1 | tr ',' '\n' | wc -l
+%% end.rcode
+and the result is 205.
+
+\medskip
+
+We are required to take only 13 fields of the data, which are \lq ST\rq, \lq NP\rq, \lq BDSP\rq, \lq BLD\rq, \lq RMSP\rq, \lq TEN\rq, \lq FINCP\rq, \lq FPARC\rq, \lq HHL\rq, \lq NOC\rq, \lq MV\rq, \lq VEH\rq, \lq YBL\rq. We can use \lq cut\rq command to cut the certain columns and save the selected data as a new .csv file and read the sliced data into R for random sampling. Before cutting the file, we need to find out the number of the selected columns in the file. We could do this simply by exacting the 205 field names into a file and use \lq grep -n\rq to look for each field name.
+%% begin.rcode find_name, eval=FALSE
+% for name in "ST" "NP" "BDSP" "BLD" "RMSP" "TEN" "FINCP" "FPARC" "HHL" "NOC" "MV" "VEH" "YBL"
+% do
+%   grep -wn $name field_name | sed 's/[^0-9]//g'
+% done
+%% end.rcode
+
+
+Then we could select the data from the .csv file and put them into a new .csv file.
+%% begin.rcode select_data, eval=FALSE
+% bzcat ss13hus.csv.bz2 | cut -d','  -f8,12,17,18,32,41,49,50,53,64,63,45,47 > selected_data.csv 
+%% end.rcode
+
+The selected data file \lq selected\_ data.csv\rq is only 252MB, which is greatly smaller than the original 5.7GB file. R is totally capable to read in the whole data file now.
+
+\medskip
+
+Read the selected data into R with \lq read.csv\rq and create 1000 sample of the data. Then save the file as \lq sample.csv\rq
+%% begin.rcode read_data, eval=FALSE
+% set.seed(0);
+% setwd("./Stat243/Homework/PS2");
+% # read in the data
+% data<-read.csv("selected_data.csv");
+% # sample 1000 rows of the data
+% sample<-data[sample(nrow(data), 1000),];
+% # save it to sample.csv
+% write.csv(sample, file = "sample_R.csv");
+%% end.rcode
+
+The result is saved in file \lq sample\_ R.csv\rq. 
+
+\section{Part(b)}
+Use \lq system.time()\rq to get the time consumed by the command
+%% begin.rcode time_estimate
+% system.time(sample1<-read.csv("sample_R.csv"));
+% system.time(sample2<-readLines("sample_R.csv"));
+%% end.rcode
+
+It turns out that \lq read.csv\rq  is much slower than \lq readLines\rq .
+
+\section{Part(c)}
+I have used the bash command to explicitly exact the data we are interested in and saved the interested data as \lq sample.csv\rq . This should speed up the flow process than using R function to exact the columns. Actually the whole process can be done with bash except the random sample generating part. With the idea that we want to use as little as R code in mind, we could use R to generate the random line number from 0 to the number of rows in the data file. The number of rows in the data can be easily find out by 
+%% begin.rcode line_number, eval=FALSE
+%   bzcat ss13hus.csv.bz2 | wc -l
+%% end.rcode
+
+The result is 7219001. Then we use R to generate 1000 random integers from 1 - 721900 
+
+%% begin.rcode random_generate, eval=FALSE
+% # generate 1000 random number as line numbers to extract the data
+% randnum <- as.data.frame(sample(1:7219000, 1000));
+% write.csv(randnum, file="randnum"); 
+
+Exact the second column which contains the random line numbers and put the random line numbers into file \lq randLine\rq
+
+%% begin.rcode randLine, eval=FALSE
+% # exact the second column of randnum 
+% tail -n +2 randnum | cut -d',' -f2 > randLine
+%% end.rcode
+
+Then use a for loop to read the random line number from file \lq randLine\rq and exact that line from \lq selected_data.csv \rq
+
+%% begin.rcode exact, eval=FALSE
+% # read the line number in randLine and exact the data
+% cat randLine | while read line;
+% do 
+%   head -n $line selected_data.csv| tail -1 >> sample_bash.csv
+% done
+%% end.rcode
+
+By using bash, we could do the same thing with R. The result is saved in file \lq sample\_ bash.csv\rq . 
+
+\section{Part(d)}
+Check the file \lq sample\_ R.csv\rq with \lq xtab\rq  and see whether there are any interesting associations. We can check the relationship between tenure of the house \lq TEN\rq  and number of vehicles\lq  VEH\rq.
+
+%% begin.rcode table1
+% xtabs(~ TEN + VEH, data=sample);
+%% end.rcode
+
+As you can see, the average number of cars owned by people who own the house with mortgage or load ($TEN=1$) is 2, while the number for people who rent the house ($TEN=3$) is roughly 1. That definitely makes some sense.
+
+\medskip
+
+\textit{* all bash scripts are saved in HW2.sh; R code saved in HW2.R; all codes have been run and tested}    
+
+\end{document}
