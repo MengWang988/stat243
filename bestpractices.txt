@@ -2,7 +2,35 @@ Artical: Code and Data for the Social Scinces: A Practitioner's Guide
 
 Authors: M.Gentzkow, J.M.Shapiro
 
-================== Comments =============================
+==================== Questions ==========================================
+1> The artical mentioned the using of directories, is there any standard way for directory management? For examle, you found some your previous results which supposed to be in folder A, but it is actually in folder B.
+
+==================== Comments on the 1(d) ================================
+i. Are there practices suggested that seem particularly compelling to you? What about ones
+that don’t seem compelling to you?
+
+Automation, Version Control and Documentation are the most interesting parts to me. 
+
+Since I am working alone on my research most of the time, Management is not particularly usefule to me.
+
+ii. Do you currently use any of the practices described? Which ones, and why? Which ones
+do you not use and why (apart from just not being aware of them)?
+
+I am using automation, version control and abstraction a lot. Since there are lots of data post-processing, automation and abstraction are neccessary and inevitable. I only use version control when writting and debugging large set of coding projects.
+
+iii. Why don’t researchers consistently utilize these principles/tools? Which ones might be the
+most/least used? Which ones might be the easiest/most difficult to implement?
+
+I frankly think lots of researchers are not exposed to these rules and practices. Like what the authors are talking about in the article,  lots of researchers who do not have computer science backgroud, pick up coding by themselves. 
+
+I would say Documentation is probablly the most used, but it is also the most difficult to implement, especially when the documentation is for other people to read your code. 
+
+iv. What principles and practices described apply more to analyses of data, and which apply
+more to software engineering? Which principles and practices apply to both?
+
+Automation, Abstration are more applied to analyses of data, while Version control, Documentation and Management are more to sofeware engineering.
+
+==================== Comments on the article =============================
 
 Page 5
 "Here is a good rule of thumb: If you are trying to solve a problem, and there are multi-billion
@@ -21,6 +49,5 @@ repeated manual steps quickly accumulate beyond the costs of investing once in a
 
 Comment: Cannot agree more.....
 
-=============== Questions =============================
-1> The artical mentioned the using of directories, is there any standard way for directory management? For examle, you found some your previous results which supposed to be in folder A, but it is actually in folder B.
+
 
