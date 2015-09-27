@@ -1,0 +1,26 @@
+Artical: Code and Data for the Social Scinces: A Practitioner's Guide
+
+Authors: M.Gentzkow, J.M.Shapiro
+
+================== Comments =============================
+
+Page 5
+"Here is a good rule of thumb: If you are trying to solve a problem, and there are multi-billion
+dollar firms whose entire business model depends on solving the same problem, and there are
+whole courses at your university devoted to how to solve that problem, you might want to figure
+out what the experts do and see if you can’t learn something from it"
+
+Comment: Taking classes or digging into the materials can be quite time-consuming. Lots of times the problems I encountered are only a small part of class. It will be great if there are some easy and efficient way to communicate with experts. 
+
+
+Page 10
+"On the other hand, we have consistently found that pushing the boundaries of automation pays
+big dividends. The costs tend to be lower than they appear, and the benefits bigger. A rule of
+research is that you will end up running every step more times than you think. And the costs of
+repeated manual steps quickly accumulate beyond the costs of investing once in a reusable tool."
+
+Comment: Cannot agree more.....
+
+=============== Questions =============================
+1> The artical mentioned the using of directories, is there any standard way for directory management? For examle, you found some your previous results which supposed to be in folder A, but it is actually in folder B.
+
