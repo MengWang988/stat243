@@ -1,0 +1,39 @@
+Stat243A
+Meng Wang, SID: 21706745
+November 8, 2015
+
+1. What are the goals of their simulation study? What are the metrics?
+Their are two golas: to assess the accuracy of the proposed asymptotic approximation in finite samples
+and to examine the power of the EM test. The metrics of this paper is, they come up with an effectice expection-maximization test for testing the null hypothesis of the arbitrary order m0 under a finite normal mixture model.
+
+2. What choices did the authors have to make in designing the simulation? What are the key aspects of the data generating mechanism? 
+
+A finite set of number from (0 0.5] called B; Number of iteration K; Penalty functions p(beta) and pn. From the result in Table 6, the sample size has great impact on the power of the test.
+
+3. Suggest some alternatives to how the authors design the study?
+
+I would suggest to use several B and K for the numerical results, and also can try larger number of components in mixed normal distributions. 
+
+4. Give some thoughts on how to set up a simulation study for their problem?
+
+I think it will be difficult since the iteration number K and the components may be very large number or infinity.
+
+5. Do their figures/tables do a good job of presenting the simulation results? Do the authors address the issue of uncertainity/simulation standard errors?
+
+The author only reported the result in a box plot for simulated type I error with mean and standard derivation. Another plot of power of test and the repetitions will be very helpful.
+
+6. Interpret their tables on power (Tables 4 and 6) - do the results make sense in terms of how the power varies as a function of the data generating mechanism?
+ 
+The results make sense. We could see that the power of the tests increases when m and n increases. It also increases when the differences of parameters in alternative models increaes.
+
+7. Discuss the extent to which they follow JASA’s guidelines on simulation studies
+
+The authors followed the guidelines for estimated accuracy of results, numerical algorithms, programming languages and major software components. But they did not report the description of pseudorandom-number generators and computers.
+
+
+
+ 
+
+
+
+  
